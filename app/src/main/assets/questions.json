@@ -1,0 +1,32 @@
+[
+  {
+    "question": "How can a man go eight days without sleep?",
+    "answer": "By sleeping during the night time",
+    "subject": "DEFAULT"
+  },
+  {
+    "question": "How can you drop a raw egg onto a concrete floor without cracking it?",
+    "answer": "The Egg won’t crack the concrete floor!",
+    "subject": "DEFAULT"
+  },
+  {
+    "question": "How can you lift an elephant with one hand?",
+    "answer": "It is not a problem, since you will never find an elephant with one hand",
+    "subject": "DEFAULT"
+  },
+  {
+    "question": "If it took eight men ten hours to build a wall,how long would it take four men to build it?",
+    "answer": "No time at all it is already built",
+    "subject": "DEFAULT"
+  },
+  {
+    "question": "If there are 6 apples and you take away 4, how many do you have?",
+    "answer": "The 4 you took",
+    "subject": "DEFAULT"
+  },
+  {
+    "question": "Some months have 31 days, others have 30 days. How many have 28 days?",
+    "answer": "All months have 28 days",
+    "subject": "DEFAULT"
+  }
+]

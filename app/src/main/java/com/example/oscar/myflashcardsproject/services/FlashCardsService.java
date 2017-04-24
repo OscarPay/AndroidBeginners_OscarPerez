@@ -31,7 +31,7 @@ public class FlashCardsService extends IntentService {
         String answer = intent.getStringExtra(KEY_ANSWER);
         String type = intent.getStringExtra(KEY_TYPE);
 
-        Log.d(TAG, question + " " + answer + " " + type);
+        Log.i(TAG, question + " " + answer + " " + type);
 
         ContentValues questionValues = new ContentValues();
         questionValues.put(QuestionEntry.COLUMN_QUESTION, question);

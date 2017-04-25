@@ -19,16 +19,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AnswerActivity"></activity>
+        <activity android:name=".activities.AnswerActivity"/>
 
         <provider
-            android:authorities="com.example.oscar.myflashcardsproject"
             android:name=".data.FlashCardsProvider"
-            android:exported="false"/>
+            android:authorities="com.example.oscar.myflashcardsproject"
+            android:exported="true" />
 
         <service
             android:name=".services.FlashCardsService"
-            android:exported="false"/>
+            android:exported="false" />
+
+        <receiver android:name=".widget.FlashCardsWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
     </application>
 
 </manifest>

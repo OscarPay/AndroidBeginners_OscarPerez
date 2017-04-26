@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import butterknife.ButterKnife;
  */
 
 public class QuestionCursorAdapter extends RecyclerView.Adapter<QuestionCursorAdapter.ViewHolder> {
+
+    private static final String TAG = QuestionCursorAdapter.class.getSimpleName();
 
     private Cursor cursor;
     private Context context;
@@ -65,6 +68,7 @@ public class QuestionCursorAdapter extends RecyclerView.Adapter<QuestionCursorAd
 
         public void bindView(Cursor cursor) {
             String question = cursor.getString(cursor.getColumnIndex(QuestionEntry.COLUMN_QUESTION));
+            Log.i(TAG, question);
             tvQuestion.setText(question);
         }
 

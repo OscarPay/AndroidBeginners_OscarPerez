@@ -6,7 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.text.LoginFilter;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.example.oscar.myflashcardsproject.R;
@@ -24,6 +26,8 @@ public class FlashCardsWidgetProvider extends AppWidgetProvider {
     public static String ACTION_WIDGET_NEXT_QUESTION = "NextQuestion";
     public static String ACTION_WIDGET_SEE_ANSWER = "SeeAnswer";
 
+    private Boolean isNextQuestion = true;
+
     private String question = "";
     private String answer = "";
 
@@ -39,17 +43,19 @@ public class FlashCardsWidgetProvider extends AppWidgetProvider {
             // Get the layout for the App Widget and attach an onclick listener to the button
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
+            getRandomQuestion(context);
+
             // Create an Intent to Next Question
             Intent intent = new Intent(context, FlashCardsWidgetProvider.class);
             intent.setAction(ACTION_WIDGET_NEXT_QUESTION);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.btnNextQuestionWidget, pendingIntent);
 
             // Create an Intent to See Answer
             intent = new Intent(context, FlashCardsWidgetProvider.class);
             intent.setAction(ACTION_WIDGET_SEE_ANSWER);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             views.setOnClickPendingIntent(R.id.btnSeeAnswerWidget, pendingIntent);
 
@@ -63,13 +69,22 @@ public class FlashCardsWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         Log.i(TAG, "onReceive()");
 
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
         if (intent.getAction().equals(ACTION_WIDGET_NEXT_QUESTION)) {
             Log.i(TAG, ACTION_WIDGET_NEXT_QUESTION);
-            //views.setTextViewText(R.id.tvQuestionWidget, question);
-            //views.setTextViewText(R.id.tvAnswerWidget, "");
+            appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+            getRandomQuestion(context);
+            views.setTextViewText(R.id.tvQuestionWidget, question);
+            views.setViewVisibility(R.id.tvAnswerWidget, View.INVISIBLE);
+            views.setTextViewText(R.id.tvAnswerWidget, answer);
+            AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, views);
         } else if (intent.getAction().equals(ACTION_WIDGET_SEE_ANSWER)) {
-            //views.setTextViewText(R.id.tvAnswerWidget, answer);
             Log.i(TAG, ACTION_WIDGET_SEE_ANSWER);
+            appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID);
+            views.setViewVisibility(R.id.tvAnswerWidget, View.VISIBLE);
+            AppWidgetManager.getInstance(context).updateAppWidget(appWidgetId, views);
         } else {
             super.onReceive(context, intent);
         }
